@@ -1,0 +1,105 @@
+Followed these steps in order to get the project done
+
+1 - Install Pyhon3 version
+2 - Install and configure vscode (python extension)
+3 - Setup Virtual Environment (venv)
+    python3 -m venv venv -> create it 
+    command pallete -> python: select interpreter .-> enter interpreter -> ./venv/bin/python
+    source venv/bin/activate
+
+4 - Go to fastApi documentation
+    pip install fastapi[all] -> install fastApi (inside venv)
+    Http request methods, FastApi -> leer
+
+5 - Download Postman app (used from now onward)
+    create the first get/post requests
+    in post request we need to have a body inside
+    # open postman ands send the post request, need to write the 
+    # body inside the body section on post
+
+6 - We need to validate the data that we are receving from the 
+    the frontend.
+
+
+Minutes
+CRUD operations
+1 hour -> up to step 5
+1:08 validate data coming from frontend
+1:30 start saving the sata inside memory and in future send it to DB, use of HTTPS methods and responses
+2:10 Update posts
+2:17 code refactor, POSTGRES database install and save data
+     documentation that FastApi uses, how to use the methods and run it
+2:18 we open the route -> http://127.0.0.1:8000/docs to have a swagger view
+     or we can open -> http://127.0.0.1:8000/redoc to have another view
+
+Work with database
+2:25 What is a database
+    pg_Admin to manage the database
+    installation  -> pg_admin password is 'agripass' and also the one for cli
+    practise in pg_Admin until minute 3:30
+    new commands in SQL -> RETURNING, OFFSET 5, UPDATE
+
+3:55 Create the tables for the project, modify the API methods: get, post, delete, update
+4:31 ORM, replace SQL by ORM, create models
+4:50 test and create table with ORM
+5:00 start creating queries with ORM
+5:32 move the pydantic class to its own file, restructure it
+5:41 create a class for the response
+5:52 create users, accounts
+6:05 mask the user password in the database
+6:10 fetch information about the user accounts
+     we will nees to see if the user has an accounts
+6:32 JWT Token Autenthication
+~9:00 Alembic
+11:15 Send request from Browser
+11:17 CORS policy (Cross Origin Resource Sharing)
+11:23 Setup Git
+    - create the requirements.txt file  ==> pip freeze > requirements.txt
+    - New people can install with --> pip install -r requirements.txt
+    - how
+
+
+
+
+Users
+postgres -> pg_admin password is 'agripass' and also the one for cli
+postman -> pinoliz34@hotmail.com
+
+Tools used
+VScode
+Postman
+postgres -> pg_Admin
+
+
+# from fastapi.param_functions import Body
+# from random import randrange
+import psycopg2
+from psycopg2.extras import RealDictCursor
+import time
+
+# Unused code
+# ------------------------------------------------
+# This while tries to reconnect inc ase of loss of connection every 2 seconds but if conn is good
+# then it does not try to reconnect
+while True:
+    try:
+        conn = psycopg2.connect(host='localhost',
+                                database='fastapi',
+                                user='postgres',
+                                password='agripass',
+                                cursor_factory=RealDictCursor)
+        cursor = conn.cursor()
+        print("success")
+        break
+    except Exception as error:
+        print("failure")
+        print("The error was", error)
+        time.sleep(2)
+
+
+How to send a reqeust from Browser
+- open inspect
+- console
+-  type:
+    fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
+    This will fail first tome due to the CORS policy, which we have to fix
